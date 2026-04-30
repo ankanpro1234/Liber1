@@ -1,0 +1,88 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and preferences",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "preferences": {
+          "type": "object",
+          "properties": {
+            "genres": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "wishlist": { "type": "array", "items": { "type": "string" } },
+        "readingHistory": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["uid", "email"]
+    },
+    "Book": {
+      "title": "Book",
+      "description": "Book information",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "author": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "coverUrl": { "type": "string" },
+        "rating": { "type": "number" },
+        "ratingCount": { "type": "integer" },
+        "pageCount": { "type": "integer" },
+        "publishedDate": { "type": "string" }
+      },
+      "required": ["title", "author"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Book review and rating",
+      "type": "object",
+      "properties": {
+        "bookId": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "userAvatar": { "type": "string" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["bookId", "userId", "rating"]
+    },
+    "UserBook": {
+      "title": "UserBook",
+      "description": "User's relationship with a book",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "bookId": { "type": "string" },
+        "status": { "type": "string", "enum": ["want_to_read", "reading", "read"] },
+        "progress": { "type": "integer" },
+        "lastRead": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "bookId", "status"]
+    }
+  },
+  "firestore": {
+    "users": {
+      "schema": "User",
+      "description": "Collection of user profiles"
+    },
+    "books": {
+      "schema": "Book",
+      "description": "Global database of books"
+    },
+    "reviews": {
+      "schema": "Review",
+      "description": "Public reviews for books"
+    },
+    "userBooks": {
+      "schema": "UserBook",
+      "description": "Tracks user library status"
+    }
+  }
+}
